@@ -1,5 +1,5 @@
 const Vibhore = () => {
-  return <div className="p-4 bg-gray-100">Vibhore component</div>;
+  return <div className="p-4 bg-gray-100">Vibhore component2</div>;
 };
 
 export default Vibhore;
