@@ -20,8 +20,8 @@ const EmployeeTable: React.FC<Props> = ({
             <th className="px-4 py-2 text-left">ID</th>
             <th className="px-4 py-2 text-left">Name2</th>
             <th className="px-4 py-2 text-left">Age2</th>
-            <th className="px-4 py-2 text-left">City</th>
-            <th className="px-4 py-2 text-left">Actions</th>
+            <th className="px-4 py-2 text-left">City3</th>
+            <th className="px-4 py-2 text-left">Actions3</th>
           </tr>
         </thead>
         <tbody>
