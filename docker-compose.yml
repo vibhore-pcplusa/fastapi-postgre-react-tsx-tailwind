@@ -12,7 +12,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_stage:/var/lib/postgresql/data
+      #- db_data:/var/lib/postgresql/data
+      
 
   backend:
     build: ./backend
@@ -33,10 +35,15 @@ services:
     build: ./frontend
     container_name: employee_frontend
     restart: always
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
     ports:
       - "5173:5173"
 
 volumes:
+  db_data_stage:
   db_data:
+  

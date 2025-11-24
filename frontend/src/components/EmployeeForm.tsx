@@ -81,7 +81,7 @@ const EmployeeForm: React.FC<Props> = ({
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
         >
-          {editingEmployee ? "Update" : "Create"}
+          {editingEmployee ? "Update" : "Create3"}
         </button>
         {editingEmployee && (
           <button
