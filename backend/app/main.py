@@ -2,7 +2,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from . import models, schemas, crud
+from .models import Employee, Department, Product, Category
+from . import schemas, crud
 from .db import Base, engine, SessionLocal
 
 # Tables are now created by Alembic migrations
