@@ -1,5 +1,6 @@
 import React from "react";
 import type { Employee } from "../api";
+import Vibhore from "./Vibhore";
 
 interface Props {
   employees: Employee[];
@@ -13,10 +14,13 @@ const EmployeeTable: React.FC<Props> = ({
   onDelete
 }) => {
   return (
-    <div className="bg-white rounded shadow overflow-x-auto">
-      <table className="min-w-full text-sm">
-        <thead className="bg-gray-100">
-          <tr>
+    <>
+      <Vibhore text="Employee Management System" />
+      <div className="bg-white rounded shadow overflow-x-auto">
+        
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-100">
+            <tr>
             <th className="px-4 py-2 text-left">ID</th>
             <th className="px-4 py-2 text-left">Name</th>
             <th className="px-4 py-2 text-left">Age</th>
@@ -59,7 +63,9 @@ const EmployeeTable: React.FC<Props> = ({
           )}
         </tbody>
       </table>
-    </div>
+      </div>
+      <Vibhore text="Footer" />
+    </>
   );
 };
 
