@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 from . import models, schemas, crud
 from .db import Base, engine, SessionLocal
 
-Base.metadata.create_all(bind=engine)
+# Tables are now created by Alembic migrations
+# Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Employee CRUD API")
 
