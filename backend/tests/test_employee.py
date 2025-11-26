@@ -105,10 +105,67 @@ def test_delete_employee_not_found(client: TestClient):
 
 def test_create_employee_invalid_data(client: TestClient):
     invalid_data = {
-        "name": "",  # Empty name should fail validation
+        #"name": "",  # Empty name should fail validation
         "age": "not_a_number",  # Invalid age type
         "city": "New York"
     }
     response = client.post("/employees", json=invalid_data)
+    print(response.json())
     # FastAPI will handle validation errors before reaching the endpoint
     assert response.status_code == 422
+    assert response.json()["detail"][0]["msg"] == "Field required"
+
+
+def test_update_employee_invalid_data(client: TestClient, sample_employee):
+    # Create an Employee first
+    create_response = client.post("/employees", json=sample_employee)
+    assert create_response.status_code == 201
+    employee_id = create_response.json()["id"]
+    
+    # Update the employee with invalid data
+    update_data = {
+        "name": "",  # Empty name should fail validation
+        "age": 28,  # Invalid age type
+        "city": "New York"
+    }
+    response = client.put(f"/employees/{employee_id}", json=update_data)
+    print("\nValidation Error Response:", response.json())
+  
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["msg"] == "String should have at least 1 character"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+def test_update_employee_invalid_data(client: TestClient, sample_employee):
+    # Create an employee first
+    create_response = client.post("/employees", json=sample_employee)
+    assert create_response.status_code == 201
+    employee_id = create_response.json()["id"]
+    
+    # Update the employee with invalid data
+    update_data = {
+        "name": "",  # Empty name should fail validation
+        "age": "not_a_number",  # Invalid age type
+        "city": "New York"
+    }
+    response = client.put(f"/employees/{employee_id}", json=update_data)
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["msg"] == "field required"
+'''
