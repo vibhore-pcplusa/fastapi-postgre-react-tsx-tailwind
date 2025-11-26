@@ -3,6 +3,7 @@ from . import models, schemas
 
 
 def get_employees(db: Session):
+    print('vj2')
     return db.query(models.Employee).all()
 
 
