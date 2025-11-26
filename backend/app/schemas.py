@@ -1,10 +1,10 @@
 from pydantic import BaseModel
-
+from pydantic import Field
 
 class EmployeeBase(BaseModel):
-    name: str
-    age: int
-    city: str
+    name: str = Field(...,  min_length=1, max_length=100, description="Name cannot be null")
+    age: int = Field(..., ge=0)
+    city: str = Field(..., min_length=1, max_length=100)
 
 
 class EmployeeCreate(EmployeeBase):
@@ -12,6 +12,7 @@ class EmployeeCreate(EmployeeBase):
 
 
 class EmployeeUpdate(EmployeeBase):
+#    name: str = Field(..., required=True)
     pass
 
 
