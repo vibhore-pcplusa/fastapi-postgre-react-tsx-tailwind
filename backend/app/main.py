@@ -9,7 +9,22 @@ from .db import Base, engine, SessionLocal
 # Tables are now created by Alembic migrations
 # Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Employee CRUD API")
+#my swagger document link to view in localhost - http://localhost:8000/docs#/default/read_employees_employees_get
+#At swagger hub i can see it at this url - https://app.swaggerhub.com/apis/prestanda/employee-crud-api/0.1.0#/default/read_employee_employees__employee_id__get
+
+
+app = FastAPI(
+    title="Employee Management API",
+    description="API for managing employee records",
+    version="1.0.0",
+    contact={
+        "name": "Vibhore",
+        "email": "vibhore@pcplusa.com"
+    },
+    license_info={
+        "name": "MIT",
+    },
+)
 
 
 origins = [
@@ -47,8 +62,19 @@ def read_employee(employee_id: int, db: Session = Depends(get_db)):
     return employee
 
 
-@app.post("/employees", response_model=schemas.Employee, status_code=201)
+@app.post("/employees", response_model=schemas.Employee, status_code=status.HTTP_201_CREATED,
+    summary="Create a new employee",
+    description="Creates a new employee with the given details",
+    response_description="The created employee record",
+    tags=["Employees"]
+)
 def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
+    """
+    Create a new employee with the following information:
+    - **name**: Full name of the employee (required)
+    - **age**: Age of the employee (must be positive)
+    - **city**: City where the employee is located
+    """
     return crud.create_employee(db, employee)
 
 
