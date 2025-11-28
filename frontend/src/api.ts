@@ -21,6 +21,17 @@ export interface EmployeeInput {
   city: string;
 }
 
+export interface Department {
+  id: number;
+  name: string;
+  description: string | null;
+}
+
+export interface DepartmentInput {
+  name: string;
+  description?: string;
+}
+
 export const fetchEmployees = async (): Promise<Employee[]> => {
   const res = await api.get<Employee[]>("/employees");
   return res.data;
@@ -43,4 +54,29 @@ export const updateEmployee = async (
 
 export const deleteEmployee = async (id: number): Promise<void> => {
   await api.delete(`/employees/${id}`);
+};
+
+// Department API functions
+export const fetchDepartments = async (): Promise<Department[]> => {
+  const res = await api.get<Department[]>("/departments");
+  return res.data;
+};
+
+export const createDepartment = async (
+  data: DepartmentInput
+): Promise<Department> => {
+  const res = await api.post<Department>("/departments", data);
+  return res.data;
+};
+
+export const updateDepartment = async (
+  id: number,
+  data: DepartmentInput
+): Promise<Department> => {
+  const res = await api.put<Department>(`/departments/${id}`, data);
+  return res.data;
+};
+
+export const deleteDepartment = async (id: number): Promise<void> => {
+  await api.delete(`/departments/${id}`);
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import type { Employee } from "../api";
-import Vibhore from "./Vibhore";
+import type { Employee } from "../../api";
+import Vibhore from "../Vibhore";
 
 interface Props {
   employees: Employee[];
