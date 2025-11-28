@@ -12,8 +12,15 @@ class EmployeeCreate(EmployeeBase):
     pass
 
 
-class EmployeeUpdate(EmployeeBase):
-    pass
+class EmployeeUpdate(BaseModel):
+    name: Optional[str] = None
+    age: Optional[int] = None
+    city: Optional[str] = None
+    department_id: Optional[int] = None
+
+
+class DepartmentAssignment(BaseModel):
+    department_id: int
 
 
 class Employee(EmployeeBase):
@@ -21,9 +28,7 @@ class Employee(EmployeeBase):
     department_name: Optional[str] = None
 
     class Config:
-
         orm_mode = True
-#        from_attributes = True
 
 class DepartmentBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100, description="Department name cannot be null")
