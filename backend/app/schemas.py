@@ -5,6 +5,7 @@ class EmployeeBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100, description="Name cannot be null")
     age: int = Field(..., ge=0)
     city: str = Field(..., min_length=1, max_length=100)
+    department_id: Optional[int] = None
 
 
 class EmployeeCreate(EmployeeBase):
@@ -17,6 +18,7 @@ class EmployeeUpdate(EmployeeBase):
 
 class Employee(EmployeeBase):
     id: int
+    department_name: Optional[str] = None
 
     class Config:
 

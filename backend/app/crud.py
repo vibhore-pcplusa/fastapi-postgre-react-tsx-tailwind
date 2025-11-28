@@ -4,11 +4,11 @@ from . import models, schemas
 
 def get_employees(db: Session):
 #    print('vj2')
-    return db.query(models.Employee).all()
+    return db.query(models.Employee).outerjoin(models.Department).all()
 
 
 def get_employee(db: Session, employee_id: int):
-    return db.query(models.Employee).filter(models.Employee.id == employee_id).first()
+    return db.query(models.Employee).outerjoin(models.Department).filter(models.Employee.id == employee_id).first()
 
 
 def create_employee(db: Session, employee: schemas.EmployeeCreate):
@@ -16,6 +16,7 @@ def create_employee(db: Session, employee: schemas.EmployeeCreate):
         name=employee.name,
         age=employee.age,
         city=employee.city,
+        department_id=employee.department_id,
     )
     db.add(db_employee)
     db.commit()
@@ -30,6 +31,8 @@ def update_employee(db: Session, employee_id: int, employee: schemas.EmployeeUpd
     db_employee.name = employee.name
     db_employee.age = employee.age
     db_employee.city = employee.city
+    if employee.department_id is not None:
+        db_employee.department_id = employee.department_id
     db.commit()
     db.refresh(db_employee)
     return db_employee

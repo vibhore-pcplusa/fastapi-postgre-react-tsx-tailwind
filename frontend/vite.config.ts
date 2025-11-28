@@ -11,10 +11,10 @@ export default defineConfig({
       interval: 100
     },
     proxy: {
-      "/employees": {
+  /*    "/employees": {
         target: "http://backend:8000",
         changeOrigin: true
-      }
+      } */
     }
   }
 });
