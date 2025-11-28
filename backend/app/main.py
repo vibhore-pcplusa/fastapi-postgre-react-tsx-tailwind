@@ -204,15 +204,18 @@ def update_employee(
 )
 def assign_department(
     employee_id: int,
-    department_data: dict,
+    department_data: schemas.DepartmentAssignment,
     db: Session = Depends(get_db),
 ):
-    # Create a partial update object with only department_id
-    employee_update = schemas.EmployeeUpdate(department_id=department_data.get("department_id"))
-    updated = crud.update_employee(db, employee_id, employee_update)
-    if not updated:
-        raise HTTPException(status_code=404, detail="Employee not found")
-    return updated
+    try:
+        # Create a partial update object with only department_id
+        employee_update = schemas.EmployeeUpdate(department_id=department_data.department_id)
+        updated = crud.update_employee(db, employee_id, employee_update)
+        if not updated:
+            raise HTTPException(status_code=404, detail="Employee not found")
+        return updated
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.delete(

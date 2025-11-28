@@ -1,14 +1,28 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from . import models, schemas
 
 
 def get_employees(db: Session):
-#    print('vj2')
-    return db.query(models.Employee).outerjoin(models.Department).all()
+    employees = db.query(models.Employee).options(
+        selectinload(models.Employee.department)
+    ).all()
+    
+    # Manually add department_name to each employee
+    for employee in employees:
+        employee.department_name = employee.department.name if employee.department else None
+    
+    return employees
 
 
 def get_employee(db: Session, employee_id: int):
-    return db.query(models.Employee).outerjoin(models.Department).filter(models.Employee.id == employee_id).first()
+    employee = db.query(models.Employee).options(
+        selectinload(models.Employee.department)
+    ).filter(models.Employee.id == employee_id).first()
+    
+    if employee:
+        employee.department_name = employee.department.name if employee.department else None
+    
+    return employee
 
 
 def create_employee(db: Session, employee: schemas.EmployeeCreate):
@@ -28,13 +42,24 @@ def update_employee(db: Session, employee_id: int, employee: schemas.EmployeeUpd
     db_employee = get_employee(db, employee_id)
     if not db_employee:
         return None
-    db_employee.name = employee.name
-    db_employee.age = employee.age
-    db_employee.city = employee.city
+    if employee.name is not None:
+        db_employee.name = employee.name
+    if employee.age is not None:
+        db_employee.age = employee.age
+    if employee.city is not None:
+        db_employee.city = employee.city
     if employee.department_id is not None:
+        # Check if department exists
+        department = db.query(models.Department).filter(models.Department.id == employee.department_id).first()
+        if not department:
+            raise ValueError(f"Department with id {employee.department_id} does not exist")
         db_employee.department_id = employee.department_id
     db.commit()
+    
+    # Refresh with department data
     db.refresh(db_employee)
+    db_employee.department_name = db_employee.department.name if db_employee.department else None
+    
     return db_employee
 
 
