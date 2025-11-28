@@ -173,6 +173,48 @@ def update_employee(
     return updated
 
 
+@app.patch(
+    "/employees/{employee_id}",
+    response_model=schemas.Employee,
+    summary="Assign department to employee",
+    description="""Updates an employee's department assignment.
+    
+    ### Parameters:
+    - **employee_id**: The unique identifier of the employee to update
+    - **department_id**: The department ID to assign
+    
+    ### Returns:
+    The updated employee object with all details
+    
+    ### Errors:
+    - 404: Employee not found
+    """,
+    response_description="Updated employee with department assignment",
+    responses={
+        404: {
+            "description": "Employee not found",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Employee not found"}
+                }
+            }
+        }
+    },
+    tags=["Employees"]
+)
+def assign_department(
+    employee_id: int,
+    department_data: dict,
+    db: Session = Depends(get_db),
+):
+    # Create a partial update object with only department_id
+    employee_update = schemas.EmployeeUpdate(department_id=department_data.get("department_id"))
+    updated = crud.update_employee(db, employee_id, employee_update)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    return updated
+
+
 @app.delete(
     "/employees/{employee_id}",
     summary="Delete an employee",
