@@ -3,12 +3,12 @@ from . import models, schemas
 
 
 def get_employees(db: Session):
-    print('vj2')
-    return db.query(models.Employee).all()
+#    print('vj2')
+    return db.query(models.Employee).outerjoin(models.Department).all()
 
 
 def get_employee(db: Session, employee_id: int):
-    return db.query(models.Employee).filter(models.Employee.id == employee_id).first()
+    return db.query(models.Employee).outerjoin(models.Department).filter(models.Employee.id == employee_id).first()
 
 
 def create_employee(db: Session, employee: schemas.EmployeeCreate):
@@ -16,6 +16,7 @@ def create_employee(db: Session, employee: schemas.EmployeeCreate):
         name=employee.name,
         age=employee.age,
         city=employee.city,
+        department_id=employee.department_id,
     )
     db.add(db_employee)
     db.commit()
@@ -30,6 +31,8 @@ def update_employee(db: Session, employee_id: int, employee: schemas.EmployeeUpd
     db_employee.name = employee.name
     db_employee.age = employee.age
     db_employee.city = employee.city
+    if employee.department_id is not None:
+        db_employee.department_id = employee.department_id
     db.commit()
     db.refresh(db_employee)
     return db_employee
@@ -40,5 +43,45 @@ def delete_employee(db: Session, employee_id: int):
     if not db_employee:
         return False
     db.delete(db_employee)
+    db.commit()
+    return True
+
+
+# Department CRUD operations
+def get_departments(db: Session):
+    return db.query(models.Department).all()
+
+
+def get_department(db: Session, department_id: int):
+    return db.query(models.Department).filter(models.Department.id == department_id).first()
+
+
+def create_department(db: Session, department: schemas.DepartmentCreate):
+    db_department = models.Department(
+        name=department.name,
+        description=department.description,
+    )
+    db.add(db_department)
+    db.commit()
+    db.refresh(db_department)
+    return db_department
+
+
+def update_department(db: Session, department_id: int, department: schemas.DepartmentUpdate):
+    db_department = get_department(db, department_id)
+    if not db_department:
+        return None
+    db_department.name = department.name
+    db_department.description = department.description
+    db.commit()
+    db.refresh(db_department)
+    return db_department
+
+
+def delete_department(db: Session, department_id: int):
+    db_department = get_department(db, department_id)
+    if not db_department:
+        return False
+    db.delete(db_department)
     db.commit()
     return True

@@ -5,7 +5,8 @@ import {
   fetchEmployees,
   createEmployee,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
+  assignDepartment
 } from "../../api";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeTable from "./EmployeeTable";
@@ -60,6 +61,16 @@ const Employee: React.FC = () => {
     }
   };
 
+  const handleDepartmentAssign = async (employeeId: number, departmentId: number) => {
+    try {
+      setError(null);
+      await assignDepartment(employeeId, departmentId);
+      await load();
+    } catch (e) {
+      setError("Failed to assign department");
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">Employee CRUD</h1>
@@ -80,6 +91,7 @@ const Employee: React.FC = () => {
           employees={employees}
           onEdit={setEditingEmployee}
           onDelete={handleDelete}
+          onDepartmentAssign={handleDepartmentAssign}
         />
       )}
     </div>

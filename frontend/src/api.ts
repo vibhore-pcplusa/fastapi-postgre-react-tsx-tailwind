@@ -13,12 +13,15 @@ export interface Employee {
   name: string;
   age: number;
   city: string;
+  department_id?: number;
+  department_name?: string;
 }
 
 export interface EmployeeInput {
   name: string;
   age: number;
   city: string;
+  department_id?: number;
 }
 
 export interface Department {
@@ -54,6 +57,16 @@ export const updateEmployee = async (
 
 export const deleteEmployee = async (id: number): Promise<void> => {
   await api.delete(`/employees/${id}`);
+};
+
+export const assignDepartment = async (
+  employeeId: number,
+  departmentId: number
+): Promise<Employee> => {
+  const res = await api.patch<Employee>(`/employees/${employeeId}`, {
+    department_id: departmentId,
+  });
+  return res.data;
 };
 
 // Department API functions
