@@ -10,6 +10,7 @@ import {
 import { assignDepartment } from "../../Api/department";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeTable from "./EmployeeTable";
+import Toast from "../Toast/Toast";
 
 const Employee: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -18,6 +19,15 @@ const Employee: React.FC = () => {
     null
   );
   const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
+    setToast({ message, type });
+  };
+
+  const hideToast = () => {
+    setToast(null);
+  };
 
   const load = async () => {
     try {
@@ -41,6 +51,7 @@ const Employee: React.FC = () => {
       setError(null);
       if (id) {
         await updateEmployee(id, data);
+        showToast("Employee updated successfully!", "success");
       } else {
         await createEmployee(data);
       }
@@ -48,6 +59,7 @@ const Employee: React.FC = () => {
       await load();
     } catch (e) {
       setError("Failed to save employee");
+      showToast("Failed to save employee", "error");
     }
   };
 
@@ -83,7 +95,15 @@ const Employee: React.FC = () => {
         onSubmit={handleSubmit}
         editingEmployee={editingEmployee}
         onCancelEdit={() => setEditingEmployee(null)}
+        onSuccess={showToast}
       />
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+        />
+      )}
       {loading ? (
         <p>Loading...</p>
       ) : (

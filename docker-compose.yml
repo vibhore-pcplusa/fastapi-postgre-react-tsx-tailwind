@@ -30,6 +30,9 @@ services:
       - db
     ports:
       - "8000:8000"
+    volumes:                    # <-- ADD THIS SECTION
+      - ./backend:/app
+      - /app/__pycache__
 
   frontend:
     build: ./frontend
