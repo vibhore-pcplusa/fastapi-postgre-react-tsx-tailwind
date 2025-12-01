@@ -6,7 +6,7 @@ import {
   createDepartment,
   updateDepartment,
   deleteDepartment
-} from "../../api";
+} from "../../Api/department";
 import DepartmentForm from "./DepartmentForm";
 import DepartmentTable from "./DepartmentTable";
 

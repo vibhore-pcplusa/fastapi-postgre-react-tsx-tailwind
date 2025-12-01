@@ -5,9 +5,9 @@ import {
   fetchEmployees,
   createEmployee,
   updateEmployee,
-  deleteEmployee,
-  assignDepartment
-} from "../../api";
+  deleteEmployee
+} from "../../Api/employee";
+import { assignDepartment } from "../../Api/department";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeTable from "./EmployeeTable";
 

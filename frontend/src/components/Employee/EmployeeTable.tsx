@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import type { Employee, Department } from "../../api";
+import type { Employee } from "../../Api/employee";
+//import type { Department } from "../../Api/department";
 import Vibhore from "../Vibhore";
-import DepartmentPopup from "./DepartmentPopup";
+import DepartmentPopup from "../Department/DepartmentPopup";
 
 interface Props {
   employees: Employee[];

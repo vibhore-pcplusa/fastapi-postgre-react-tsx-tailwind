@@ -1,5 +1,5 @@
 import React from "react";
-import type { Department } from "../../api";
+import type { Department } from "../../Api/department";
 
 interface Props {
   departments: Department[];

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchDepartments, type Department } from "../../api";
+import { fetchDepartments, type Department } from "../../Api/department";
 
 interface Props {
   onClose: () => void;
