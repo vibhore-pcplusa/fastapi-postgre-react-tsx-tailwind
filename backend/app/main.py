@@ -130,6 +130,9 @@ def read_employee(employee_id: int, db: Session = Depends(get_db)):
     tags=["Employees"]  # Make sure this matches the tag name above
 )
 def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
+    #print("DEBUG: create_employee called with:", employee.dict())
+    #import sys
+    #sys.exit(0)  # This will stop the server
     return crud.create_employee(db, employee)
 
 

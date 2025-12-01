@@ -9,6 +9,7 @@ import {
 } from "../../Api/department";
 import DepartmentForm from "./DepartmentForm";
 import DepartmentTable from "./DepartmentTable";
+import Toast from "../Toast/Toast";
 
 const Department: React.FC = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -17,6 +18,15 @@ const Department: React.FC = () => {
     null
   );
   const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
+    setToast({ message, type });
+  };
+
+  const hideToast = () => {
+    setToast(null);
+  };
 
   const load = async () => {
     try {
@@ -40,6 +50,7 @@ const Department: React.FC = () => {
       setError(null);
       if (id) {
         await updateDepartment(id, data);
+        showToast("Department updated successfully!", "success");
       } else {
         await createDepartment(data);
       }
@@ -47,6 +58,7 @@ const Department: React.FC = () => {
       await load();
     } catch (e) {
       setError("Failed to save department");
+      showToast("Failed to save department", "error");
     }
   };
 
@@ -72,7 +84,15 @@ const Department: React.FC = () => {
         onSubmit={handleSubmit}
         editingDepartment={editingDepartment}
         onCancelEdit={() => setEditingDepartment(null)}
+        onSuccess={showToast}
       />
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+        />
+      )}
       {loading ? (
         <p>Loading...</p>
       ) : (
