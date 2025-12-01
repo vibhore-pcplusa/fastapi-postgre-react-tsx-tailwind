@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import type { Department, DepartmentInput } from "../../api";
+import type { Department, DepartmentInput } from "../../Api/department";
 
 interface Props {
   onSubmit: (data: DepartmentInput, id?: number) => void;
