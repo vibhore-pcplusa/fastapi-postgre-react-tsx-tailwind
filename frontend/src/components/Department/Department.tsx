@@ -66,6 +66,7 @@ const Department: React.FC = () => {
     try {
       setError(null);
       await deleteDepartment(id);
+      showToast("Department deleted successfully!", "success");
       await load();
     } catch (e) {
       setError("Failed to delete department");
