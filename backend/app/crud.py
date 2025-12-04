@@ -48,12 +48,15 @@ def update_employee(db: Session, employee_id: int, employee: schemas.EmployeeUpd
         db_employee.age = employee.age
     if employee.city is not None:
         db_employee.city = employee.city
+    '''
+    VJ - There is no use of checking department in the update case. 
     if employee.department_id is not None:
         # Check if department exists
         department = db.query(models.Department).filter(models.Department.id == employee.department_id).first()
         if not department:
             raise ValueError(f"Department with id {employee.department_id} does not exist")
         db_employee.department_id = employee.department_id
+    '''    
     db.commit()
     
     # Refresh with department data
