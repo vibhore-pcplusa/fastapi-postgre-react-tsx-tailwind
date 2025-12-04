@@ -40,6 +40,30 @@ const Navbar = () => {
         </li>
         <li>
           <Link
+            to="/calculator"
+            className={`block px-4 py-2 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-colors ${
+              isActive("/calculator")
+                ? "bg-blue-700 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 focus:ring-blue-400"
+            }`}
+          >
+            Calculator
+          </Link>
+        </li>
+         <li>
+          <Link
+            to="/calculator"
+            className={`block px-4 py-2 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-colors ${
+              isActive("/calculator")
+                ? "bg-blue-700 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 focus:ring-blue-400"
+            }`}
+          >
+            Advanced Calculator(single screen 14 buttons - test)
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/employees"
             className={`block px-4 py-2 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-colors ${
               isActive("/employees")
