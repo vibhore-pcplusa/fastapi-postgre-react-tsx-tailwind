@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Employee from "./components/Employee/Employee";
 import Department from "./components/Department/Department";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import Playground from "./components/Playground";
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/employees" element={<Employee />} />
             <Route path="/departments" element={<Department />} />
+            <Route path="/playground" element={<Playground />} />
           </Routes>
         </main>
       </div>

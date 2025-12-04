@@ -28,6 +28,18 @@ const Navbar = () => {
         </li>
         <li>
           <Link
+            to="/playground"
+            className={`block px-4 py-2 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-colors ${
+              isActive("/playground") || isActive("/")
+                ? "bg-blue-700 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 focus:ring-blue-400"
+            }`}
+          >
+            Playground
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/employees"
             className={`block px-4 py-2 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-colors ${
               isActive("/employees")
