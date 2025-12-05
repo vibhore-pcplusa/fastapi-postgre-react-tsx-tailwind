@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import Playground from "./components/Playground";
 import Calculator from "./components/Calculator";
+import AdvCalculator from "./components/AdvCalculator";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Route path="/departments" element={<Department />} />
             <Route path="/playground" element={<Playground />} />
             <Route path="/calculator" element={<Calculator />} />
+            <Route path="/adv_calculator" element={<AdvCalculator />} />
           </Routes>
         </main>
       </div>
