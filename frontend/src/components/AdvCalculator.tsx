@@ -103,14 +103,21 @@ const AdvCalculator = () => {
       setNum1(num1 + 0.0); // Add a decimal point
     }
   };
+  const handleSqrt = () => {
+    setNum1(Math.sqrt(num1));
+  }
+
+  /*const handleSqr = () => {
+    setNum1(Math.pow(num1,2));
+  }*/
 
   return (
     <div className="max-w-md mx-auto p-6 bg-gray rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Advanced Calculator</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-red-500" >Advanced Calculator</h2>
       
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Display</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1 text-pink-500" >Display</label>
           <input
             type="text"
             readOnly
@@ -153,6 +160,13 @@ const AdvCalculator = () => {
           <button onClick={handleDecimal} className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">.</button>
           <button onClick={handleEqual} className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">=</button>
         </div>
+        <h5 style={{color:'blue'}}>Extra Functions</h5>
+        <div className="flex space-x-3">
+          {/*<button onClick={() => handleNumber(20)} className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">00</button>*/}
+          <button onClick={() => handleSqrt()} className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">sqrt</button>
+          <button onClick={() => setNum1(Math.pow(num1,2))} className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">*pow*</button>
+        </div>
+
       </div>
     </div>
   );
